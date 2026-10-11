@@ -7,6 +7,10 @@ import (
 
 func main() {
 	http.HandleFunc("/validate", KubernetesAdmissionHandler)
+	
+	http.HandleFunc("/", DashboardHandler)
+
+	http.HandleFunc("/evaluate", EvaluateHandler)
 
 	log.Println("FinOps admission server starting with HTTPS on :8443")
 
