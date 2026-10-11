@@ -1,0 +1,24 @@
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: over-budget-demo
+  annotations:
+    finops.example.com/monthly-budget: "10000"
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: over-budget-demo
+  template:
+    metadata:
+      labels:
+        app: over-budget-demo
+    spec:
+      containers:
+        - name: app
+          image: nginx
+          resources:
+            requests:
+              cpu: "2"
+              memory: "4Gi"

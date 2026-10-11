@@ -1,0 +1,43 @@
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: finops-webhook
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: finops-webhook
+  template:
+    metadata:
+      labels:
+        app: finops-webhook
+    spec:
+      containers:
+        - name: webhook
+          image: finops-webhook:local
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8443
+          volumeMounts:
+            - name: tls-certificates
+              mountPath: /app/certs
+              readOnly: true
+      volumes:
+        - name: tls-certificates
+          secret:
+            secretName: finops-webhook-tls
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: finops-webhook
+spec:
+  type: ClusterIP
+  selector:
+    app: finops-webhook
+  ports:
+    - name: https
+      port: 443
+      targetPort: 8443

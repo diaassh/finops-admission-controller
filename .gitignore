@@ -1,0 +1,13 @@
+
+# Private TLS certificates and keys
+certs/
+*.key
+
+# Compiled Go programs
+*.exe
+*.test
+
+# Editor and operating system files
+.vscode/
+.DS_Store
+Thumbs.db
